@@ -11,17 +11,6 @@ RUN vagrant box add digital_ocean https://github.com/smdahlen/vagrant-digitaloce
 
 ADD Vagrantfile /Vagrantfile
 ADD cloud-config.yaml /cloud-config.yaml
-# RUN curl -sL https://deb.nodesource.com/setup | sudo bash - && \
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash - && \
-    apt-get update && \
-    apt-get install -y build-essential curl nodejs git systemd-services python && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-COPY tests /tests
-WORKDIR /tests
-RUN npm install -g mocha
-RUN npm install
 
 ADD initialize.sh /initialize.sh
 ADD run_tests.sh /run_tests.sh
