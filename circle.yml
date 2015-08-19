@@ -5,12 +5,13 @@ machine:
 dependencies:
   override:
     - docker build -t test-integration-dockerfile:latest .
+    - docker run -e "APIKEY=${APIKEY}" --name=test-integration-dockerfile-init test-integration-dockerfile:latest /initialize.sh
+    - docker commit test-integration-dockerfile-init test-integration-dockerfile:latest
 
 test:
   override:
-    - docker run -e "APIKEY=${APIKEY}" --name=test-integration-dockerfile test-integration-dockerfile:latest
+    - docker run --name=test-integration-dockerfile test-integration-dockerfile:latest /run_tests.sh
   post:
-    - docker commit test-integration-dockerfile test-integration-dockerfile:latest
     - docker run --name=DUMP-test-integration-dockerfile test-integration-dockerfile:latest vagrant ssh -- sudo journalctl
     - docker run --name=DESTROY-test-integration-dockerfile test-integration-dockerfile:latest vagrant destroy -f
     # TODO: Collect container as an asset?
