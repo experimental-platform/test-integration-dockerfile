@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # enable fail detection...
 set -e
+set -x
 
 echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 HOSTIP=$(vagrant ssh-config | awk '/HostName/ {print $2}')
@@ -17,7 +18,7 @@ git init
 git config user.email "engineering@protonet.info"
 git config user.name "Protonet Integration Test node.js"
 
-echo -e "FROM experimentalplatform/ubuntu:latest\nRUN apt-get -y update && apt-get -y install nmap\nCMD /usr/bin/ncat -c 'echo $(date)' -l -k 5000" > Dockerfile
+mv Dockerfile-nginx Dockerfile
 # http://progrium.viewdocs.io/dokku/checks-examples.md
 echo -e "WAIT=10\nATTEMPTS=20\n/ Hello" > CHECKS
 git add .
