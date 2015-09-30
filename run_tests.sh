@@ -18,7 +18,8 @@ git init
 git config user.email "engineering@protonet.info"
 git config user.name "Protonet Integration Test node.js"
 
-mv Dockerfile-nginx Dockerfile
+cp ../Dockerfile-nginx Dockerfile
+cp ../index.html .
 # http://progrium.viewdocs.io/dokku/checks-examples.md
 echo -e "WAIT=10\nATTEMPTS=20\n/ Hello" > CHECKS
 git add .
